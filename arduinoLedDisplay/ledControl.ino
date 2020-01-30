@@ -3,6 +3,17 @@
 // Authors : Maxime Chretien (MixLeNain)
 // Version : 0.1
 
-#include "characters.h"
 #include "ledControl.h"
 
+void initDisplay(short pin) {
+	dataPin = pin;
+	
+}
+
+void changeText(String text) {
+
+}
+
+void updateDisplay() {
+
+}

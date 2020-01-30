@@ -5,13 +5,23 @@
 
 #include "ledControl.h"
 
+#define LEDPIN 2
+
+String text = "";
+bool textChanged = false;
+
 
 void setup() {
-  // put your setup code here, to run once:
-
+	initDisplay(LEDPIN);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+	if(textChanged)
+		changeText(text);
 
+
+
+
+	updateDisplay();
+	delay(10);
 }
