@@ -5,14 +5,12 @@
 
 #include "ledControl.h"
 
-#define LEDPIN 2
-
 String text = "";
 bool textChanged = false;
 
 
 void setup() {
-	initDisplay(LEDPIN);
+	initDisplay();
 }
 
 void loop() {
