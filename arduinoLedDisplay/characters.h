@@ -15,24 +15,6 @@ struct character {
 	uint8_t pixels[5]; //used to store bits
 };
 
-//Return the correct struct corresponding to the given char
-struct characters getCharacter(char symbol) {
-	struct character result;
-
-	symbol = tolower(symbol); //lowercase because we don't support case
-	
-	if (symbol >= 'a' && symbol < 'z') {
-		result = chars[symbol - 'a'];
-
-	} else if (symbol >= '0' && symbol < '9') {
-		result = chars[26 + (symbol - '0')];
-	} else {
-		result = {4, {0,0,0,0,0}};
-	}
-
-	return result;
-}
-
 const struct character chars[NBCHAR] = {
 	//Letter A
 	{4, {	0b00000110,
@@ -287,5 +269,24 @@ const struct character chars[NBCHAR] = {
 		0b00000110}
 	}
 };
+
+
+//Return the correct struct corresponding to the given char
+struct character getCharacter(char symbol) {
+	struct character result;
+
+	symbol = tolower(symbol); //lowercase because we don't support case
+	
+	if (symbol >= 'a' && symbol < 'z') {
+		result = chars[symbol - 'a'];
+
+	} else if (symbol >= '0' && symbol < '9') {
+		result = chars[26 + (symbol - '0')];
+	} else {
+		result = {4, {0,0,0,0,0}};
+	}
+
+	return result;
+}
 
 #endif
