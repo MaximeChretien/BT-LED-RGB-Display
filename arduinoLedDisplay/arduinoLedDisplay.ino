@@ -11,6 +11,7 @@ bool textChanged = false;
 
 void setup() {
 	initDisplay();
+  changeText(String("GEII2020"));
 }
 
 void loop() {
@@ -21,5 +22,5 @@ void loop() {
 
 
 	updateDisplay();
-	delay(10);
+	delay(100);
 }
