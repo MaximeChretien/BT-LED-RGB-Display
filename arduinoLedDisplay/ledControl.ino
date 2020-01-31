@@ -41,11 +41,11 @@ void updateDisplay() {
 		if(pixIndex == -1) {
 			//Turn off the remaining leds
 			for (dispIndex; dispIndex < 30; dispIndex++) {
-				leds[dispIndex] = CRGB::Black;
-				leds[dispIndex + 30] = CRGB::Black;
-				leds[dispIndex + 60] = CRGB::Black;
-				leds[dispIndex + 90] = CRGB::Black;
-				leds[dispIndex + 120] = CRGB::Black;
+				leds[ledsIndex[dispIndex]] = CRGB::Black;
+				leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
+				leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
+				leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
+				leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
 			}
 
 			break; //Go out of the loop
@@ -55,11 +55,11 @@ void updateDisplay() {
 		while(pixIndex >= 0 && dispIndex < 30) {
 
 			//Get the color for each led in this column
-			leds[dispIndex] = getPixColor(0, charIndex, pixIndex);
-			leds[dispIndex + 30] = getPixColor(1, charIndex, pixIndex);
-			leds[dispIndex + 60] = getPixColor(2, charIndex, pixIndex);
-			leds[dispIndex + 90] = getPixColor(3, charIndex, pixIndex);
-			leds[dispIndex + 120] = getPixColor(4, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + 30]] = getPixColor(1, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + 60]] = getPixColor(2, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + 90]] = getPixColor(3, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + 120]] = getPixColor(4, charIndex, pixIndex);
 
 			pixIndex--;
 			dispIndex++;
@@ -67,11 +67,11 @@ void updateDisplay() {
 
 		//Add a blank column after each character (space between characters)
 		if(dispIndex < 30) {
-			leds[dispIndex] = CRGB::Black;
-			leds[dispIndex + 30] = CRGB::Black;
-			leds[dispIndex + 60] = CRGB::Black;
-			leds[dispIndex + 90] = CRGB::Black;
-			leds[dispIndex + 120] = CRGB::Black;
+			leds[ledsIndex[dispIndex]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
 
 			dispIndex++;
 		}
