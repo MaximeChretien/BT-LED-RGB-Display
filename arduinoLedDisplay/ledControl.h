@@ -10,7 +10,7 @@
 #include "characters.h"
 #include "FastLED.h" //Used to control the led display
 
-#define LEDPIN 2
+#define LEDPIN 6
 #define MAXSTRSIZE 50
 #define NUM_LEDS 150
 
