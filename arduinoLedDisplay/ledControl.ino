@@ -6,7 +6,7 @@
 #include "ledControl.h"
 
 void initDisplay() {
-	FastLED.addLeds<SK6812, LEDPIN, RGB>(leds, NUM_LEDS);
+	FastLED.addLeds<SK6812, LEDPIN, GRB>(leds, NUM_LEDS);
 }
 
 void changeText(String text) {
@@ -28,7 +28,7 @@ void changeText(String text) {
 
 	//Reset start index
 	textIndex[0] = 0;
-	textIndex[1] = 0;
+	textIndex[1] = textInPixels[textIndex[0]].charPix.length-1;
 }
 
 void updateDisplay() {
