@@ -7,6 +7,8 @@
 #ifndef CHARACTERS_H
 #define CHARACTERS_H
 
+#include "PROGMEM_readAnything.h"
+
 //Number of defined chars : Letter+digits+others
 #define NBCHAR 26+10+31
 
@@ -16,7 +18,7 @@ struct character {
 	uint8_t pixels[5]; //used to store bits
 };
 
-const struct character chars[NBCHAR] = {
+const struct character chars[NBCHAR] PROGMEM = {
 	//Letter A
 	{4, {	0b00000110,
 		0b00001001,
@@ -496,104 +498,104 @@ struct character getCharacter(char symbol) {
 	symbol = tolower(symbol); //lowercase because we don't support case
 	
 	if (symbol >= 'a' && symbol < 'z') {
-		result = chars[symbol - 'a'];
+		result = PROGMEM_getAnything(&chars[symbol - 'a']);
 
 	} else if (symbol >= '0' && symbol < '9') {
-		result = chars[26 + (symbol - '0')];
+		result = PROGMEM_getAnything(&chars[26 + (symbol - '0')]);
 	} else {
 		switch (symbol) {
 			case ' ':
-				result = chars[36];
+				result = PROGMEM_getAnything(&chars[36]);
 				break;
 			case '.':
-				result = chars[37];
+				result = PROGMEM_getAnything(&chars[37]);
 				break;
 			case '!':
-				result = chars[38];
+				result = PROGMEM_getAnything(&chars[38]);
 				break;
 			case '?':
-				result = chars[39];
+				result = PROGMEM_getAnything(&chars[39]);
 				break;
 			case '\'':
-				result = chars[40];
+				result = PROGMEM_getAnything(&chars[40]);
 				break;
 			case '-':
-				result = chars[41];
+				result = PROGMEM_getAnything(&chars[41]);
 				break;
 			case '+':
-				result = chars[42];
+				result = PROGMEM_getAnything(&chars[42]);
 				break;
 			case '/':
-				result = chars[43];
+				result = PROGMEM_getAnything(&chars[43]);
 				break;
 			case '\\':
-				result = chars[44];
+				result = PROGMEM_getAnything(&chars[44]);
 				break;
 			case '%':
-				result = chars[45];
+				result = PROGMEM_getAnything(&chars[45]);
 				break;
 			case '<':
-				result = chars[46];
+				result = PROGMEM_getAnything(&chars[46]);
 				break;
 			case '>':
-				result = chars[47];
+				result = PROGMEM_getAnything(&chars[47]);
 				break;
 			case '_':
-				result = chars[48];
+				result = PROGMEM_getAnything(&chars[48]);
 				break;
 			case '=':
-				result = chars[49];
+				result = PROGMEM_getAnything(&chars[49]);
 				break;
 			case '(':
-				result = chars[50];
+				result = PROGMEM_getAnything(&chars[50]);
 				break;
 			case ')':
-				result = chars[51];
+				result = PROGMEM_getAnything(&chars[51]);
 				break;
 			case '[':
-				result = chars[52];
+				result = PROGMEM_getAnything(&chars[52]);
 				break;
 			case ']':
-				result = chars[53];
+				result = PROGMEM_getAnything(&chars[53]);
 				break;
 			case '{':
-				result = chars[54];
+				result = PROGMEM_getAnything(&chars[54]);
 				break;
 			case '}':
-				result = chars[55];
+				result = PROGMEM_getAnything(&chars[55]);
 				break;
 			case '@':
-				result = chars[56];
+				result = PROGMEM_getAnything(&chars[56]);
 				break;
 			case '*':
-				result = chars[57];
+				result = PROGMEM_getAnything(&chars[57]);
 				break;
 			case '^':
-				result = chars[58];
+				result = PROGMEM_getAnything(&chars[58]);
 				break;
 			case '#':
-				result = chars[59];
+				result = PROGMEM_getAnything(&chars[59]);
 				break;
 			case ',':
-				result = chars[60];
+				result = PROGMEM_getAnything(&chars[60]);
 				break;
 			case ';':
-				result = chars[61];
+				result = PROGMEM_getAnything(&chars[61]);
 				break;
 			case ':':
-				result = chars[62];
+				result = PROGMEM_getAnything(&chars[62]);
 				break;
 			case '`':
-				result = chars[63];
+				result = PROGMEM_getAnything(&chars[63]);
 				break;
 			case '~':
-				result = chars[64];
+				result = PROGMEM_getAnything(&chars[64]);
 				break;
 			case '|':
-				result = chars[65];
+				result = PROGMEM_getAnything(&chars[65]);
 				break;
 			case '"':
-				result = chars[66];
+				result = PROGMEM_getAnything(&chars[66]);
 				break;
 			default :
 				result = {4, {0,0,1,0,0}};
