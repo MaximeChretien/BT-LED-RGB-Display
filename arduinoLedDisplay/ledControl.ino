@@ -1,7 +1,7 @@
 // Name : ledControl.ino
 // Description : Implement the functions defined in ledControl.h 
 // Authors : Maxime Chretien (MixLeNain)
-// Version : 1.0
+// Version : 1.1
 
 #include "ledControl.h"
 

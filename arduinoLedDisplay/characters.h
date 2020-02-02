@@ -2,7 +2,7 @@
 // Description : define the char struct and the way to show each char
 // 		using the led display (pixels repartition)
 // Authors : Maxime Chretien (MixLeNain)
-// Version : 1.0
+// Version : 1.1
 
 #ifndef CHARACTERS_H
 #define CHARACTERS_H

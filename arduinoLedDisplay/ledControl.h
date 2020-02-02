@@ -2,7 +2,7 @@
 // Description : Define the functions used to control the display 
 //		and the string processing
 // Authors : Maxime Chretien (MixLeNain)
-// Version : 1.0
+// Version : 1.1
 
 #ifndef LEDCONTROL_H
 #define LEDCONTROL_H

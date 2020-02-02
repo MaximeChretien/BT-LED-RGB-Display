@@ -1,7 +1,7 @@
 // Name : arduinoLedDisplay.ino
 // Description : Main file of the project arduinoLedDisplay
 // Authors : Maxime Chretien (MixLeNain) & Therence Forot
-// Version : 0.2
+// Version : 0.3
 
 #include "ledControl.h"
 
