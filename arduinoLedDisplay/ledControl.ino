@@ -14,7 +14,7 @@ void changeText(String text) {
 	text.toCharArray(textCh, MAXSTRSIZE);
 
 	//Convert each chars into pixels and store them in the array
-	short i;
+	uint8_t i;
 	for(i = 0; i < MAXSTRSIZE && textCh[i]!='\0'; i++) {
 		textInPixels[i].charPix = getCharacter(textCh[i]);
 		textInPixels[i].color = textColor;
@@ -32,9 +32,9 @@ void changeText(String text) {
 }
 
 void updateDisplay() {
-	short dispIndex = 0; //Column index on the display
-	short charIndex = textIndex[0]; //Character index in textInPixels
-	short pixIndex = textIndex[1];	//Pixel index in the character
+	uint8_t dispIndex = 0; //Column index on the display
+	uint8_t charIndex = textIndex[0]; //Character index in textInPixels
+	uint8_t pixIndex = textIndex[1]; //Pixel index in the character
 
 	while(dispIndex < 30) {
 		//If we have reached the end of the text
@@ -99,7 +99,7 @@ void updateDisplay() {
 	FastLED.show();
 }
 
-CRGB getPixColor(short line, short charIndex, short pixIndex) {
+CRGB getPixColor(uint8_t line, uint8_t charIndex, uint8_t pixIndex) {
 	//Read the corresponding bit and turn on the led if it's a 1
 	if(bitRead(textInPixels[charIndex].charPix.pixels[line], pixIndex)) {
 		return textInPixels[charIndex].color;
