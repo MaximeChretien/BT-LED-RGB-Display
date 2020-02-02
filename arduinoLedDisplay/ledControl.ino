@@ -1,7 +1,7 @@
 // Name : ledControl.ino
 // Description : Implement the functions defined in ledControl.h 
 // Authors : Maxime Chretien (MixLeNain)
-// Version : 1.1
+// Version : 1.2
 
 #include "ledControl.h"
 
@@ -24,11 +24,17 @@ void changeText(String text) {
 		pixSize += textInPixels[i].charPix.length+1;
 	}
 
-	//Use a 0 sized character to specify the end of the string
-	if(i < MAXSTRSIZE) {
-		textInPixels[i].charPix = {0, {0,0,0,0,0}};
+	//Add blank pixels at the end of the screen for a smooth scrolling effect
+	for(uint8_t j = 0; j <= BLANKPIXELS && i < (MAXSTRSIZE+BLANKPIXELS); j++) {
+		textInPixels[i].charPix = {1, {0,0,0,0,0}};
 		textInPixels[i].color = textColor;
+
+		i++;
 	}
+
+	//Use a 0 sized character to specify the end of the string
+	textInPixels[i].charPix = {0, {0,0,0,0,0}};
+	textInPixels[i].color = textColor;
 
 	//Enable scrolling if the text is larger than the screen
 	scroll = (pixSize > 30) ? true : false;
@@ -46,13 +52,42 @@ void updateDisplay() {
 	while(dispIndex < 30) {
 		//If we have reached the end of the text
 		if(pixIndex == -1) {
-			//Turn off the remaining leds
-			for (dispIndex; dispIndex < 30; dispIndex++) {
-				leds[ledsIndex[dispIndex]] = CRGB::Black;
-				leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
-				leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
-				leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
-				leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+			if(scroll) {
+				//If scroll is enabled start the text again
+				for(uint8_t c = 0; dispIndex < 30; c++) { //Increase char index
+					for(uint8_t p = textInPixels[c].charPix.length-1;
+						p >= 0 && dispIndex < 30; p--) { //Get pixel index
+						leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + 30]] = getPixColor(1, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + 60]] = getPixColor(2, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + 90]] = getPixColor(3, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + 120]] = getPixColor(4, charIndex, pixIndex);
+
+						dispIndex++;
+					}
+
+					//Add a blank column after each character (space between characters)
+					if(dispIndex < 30) {
+						leds[ledsIndex[dispIndex]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+
+						dispIndex++;
+					}
+				}
+
+
+			} else {
+				//If not turn off the remaining leds
+				for (dispIndex; dispIndex < 30; dispIndex++) {
+					leds[ledsIndex[dispIndex]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+				}
 			}
 
 			break; //Go out of the loop

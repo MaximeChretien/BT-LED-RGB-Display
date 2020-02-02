@@ -2,7 +2,7 @@
 // Description : Define the functions used to control the display 
 //		and the string processing
 // Authors : Maxime Chretien (MixLeNain)
-// Version : 1.1
+// Version : 1.2
 
 #ifndef LEDCONTROL_H
 #define LEDCONTROL_H
@@ -13,6 +13,9 @@
 #define LEDPIN 6
 #define MAXSTRSIZE 50
 #define NUM_LEDS 150
+
+//Number of blank pixels at the end of the text for a smooth scrolling effect
+#define BLANKPIXELS 8
 
 const uint8_t ledsIndex[NUM_LEDS] = {	  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15,  16,  17,  18,  19,  20,  21,  22,  23,  24,  25,  26,  27,  28,  29,
 					 59,  58,  57,  56,  55,  54,  53,  52,  51,  50,  49,  48,  47,  46,  45,  44,  43,  42,  41,  40,  39,  38,  37,  36,  35,  34,  33,  32,  31,  30,
@@ -32,7 +35,7 @@ struct charInPixels {
 	CRGB color;
 };
 
-struct charInPixels textInPixels[MAXSTRSIZE];
+struct charInPixels textInPixels[MAXSTRSIZE+BLANKPIXELS+1];
 
 
 void initDisplay();
