@@ -10,6 +10,8 @@ void initDisplay() {
 }
 
 void changeText(String text) {
+	uint8_t pixSize = 0;
+
 	char textCh[MAXSTRSIZE];
 	text.toCharArray(textCh, MAXSTRSIZE);
 
@@ -18,6 +20,8 @@ void changeText(String text) {
 	for(i = 0; i < MAXSTRSIZE && textCh[i]!='\0'; i++) {
 		textInPixels[i].charPix = getCharacter(textCh[i]);
 		textInPixels[i].color = textColor;
+
+		pixSize += textInPixels[i].charPix.length+1;
 	}
 
 	//Use a 0 sized character to specify the end of the string
@@ -25,6 +29,9 @@ void changeText(String text) {
 		textInPixels[i].charPix = {0, {0,0,0,0,0}};
 		textInPixels[i].color = textColor;
 	}
+
+	//Enable scrolling if the text is larger than the screen
+	scroll = (pixSize > 30) ? true : false;
 
 	//Reset start index
 	textIndex[0] = 0;
@@ -80,19 +87,22 @@ void updateDisplay() {
 		pixIndex = textInPixels[charIndex].charPix.length-1;
 	}
 
-	//Decrease the start pixel index
-	textIndex[1]--;
+	//Enable scroll effect if needed
+	if(scroll) {
+		//Decrease the start pixel index
+		textIndex[1]--;
 
-	//If we have finished with the current character increase the start character index
-	if(textIndex[1] < 0) {
-		textIndex[0]++;
+		//If we have finished with the current character increase the start character index
+		if(textIndex[1] < 0) {
+			textIndex[0]++;
 
-		//If we have reached the end of the text, go back to the beggining
-		if(textInPixels[textIndex[0]].charPix.length == 0) {
-			textIndex[0] = 0;
+			//If we have reached the end of the text, go back to the beggining
+			if(textInPixels[textIndex[0]].charPix.length == 0) {
+				textIndex[0] = 0;
+			}
+
+			textIndex[1] = textInPixels[textIndex[0]].charPix.length;
 		}
-
-		textIndex[1] = textInPixels[textIndex[0]].charPix.length;
 	}
 
 	//Display the text on the display
