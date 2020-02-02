@@ -92,15 +92,18 @@ void updateDisplay() {
 		//Decrease the start pixel index
 		textIndex[1]--;
 
-		//If we have finished with the current character increase the start character index
+		//If we have finished with the current character 
+		//increase the start character index
 		if(textIndex[1] < 0) {
 			textIndex[0]++;
 
-			//If we have reached the end of the text, go back to the beggining
+			//If we have reached the end of the text, 
+			//go back to the beggining
 			if(textInPixels[textIndex[0]].charPix.length == 0) {
 				textIndex[0] = 0;
 			}
 
+			//Get the beginning pixel index
 			textIndex[1] = textInPixels[textIndex[0]].charPix.length;
 		}
 	}

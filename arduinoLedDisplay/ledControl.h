@@ -22,7 +22,9 @@ const uint8_t ledsIndex[NUM_LEDS] = {	  0,   1,   2,   3,   4,   5,   6,   7,   
 CRGB leds[NUM_LEDS];
 CRGB textColor = CRGB::Red;
 
-uint8_t textIndex[2] = {0, 0}; //Start index when writing on the display (char index + pixel index)
+//Start index when writing on the display (char index + pixel index)
+uint8_t textIndex[2] = {0, 0};
+
 bool scroll = true;
 
 struct charInPixels {
