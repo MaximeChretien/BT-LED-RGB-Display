@@ -11,12 +11,16 @@ bool textChanged = false;
 
 void setup() {
 	initDisplay();
-	changeText(String("GEII2020"));
+	
+	text = "GEII 2020 !";
+	textChanged = true;
 }
 
 void loop() {
-	if(textChanged)
+	if(textChanged) {
 		changeText(text);
+		textChanged = false;
+	}
 
 
 
