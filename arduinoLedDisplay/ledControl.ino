@@ -25,8 +25,13 @@ void changeText(String text) {
 	}
 
 	//Add blank pixels at the end of the screen for a smooth scrolling effect
-	for(uint8_t j = 0; j <= BLANKPIXELS && i < (MAXSTRSIZE+BLANKPIXELS); j++) {
-		textInPixels[i].charPix = {1, {0,0,0,0,0}};
+	for(uint8_t j = 1; j <= BLANKCHARS && i < ARRAYSIZE; j++) {
+		if((j * 8) < BLANKPIXELS) {
+			textInPixels[i].charPix = {8, {0,0,0,0,0}};
+		} else {
+			textInPixels[i].charPix = {(BLANKPIXELS % 8), {0,0,0,0,0}};
+		}
+
 		textInPixels[i].color = textColor;
 
 		i++;
