@@ -42,7 +42,7 @@ void changeText(String text) {
 	textInPixels[i].color = textColor;
 
 	//Enable scrolling if the text is larger than the screen
-	scroll = (pixSize > 30) ? true : false;
+	scroll = (pixSize > LINESIZE) ? true : false;
 
 	//Reset start index
 	textIndex[0] = 0;
@@ -54,30 +54,30 @@ void updateDisplay() {
 	uint8_t charIndex = textIndex[0]; //Character index in textInPixels
 	uint8_t pixIndex = textIndex[1]; //Pixel index in the character
 
-	while(dispIndex < 30) {
+	while(dispIndex < LINESIZE) {
 		//If we have reached the end of the text
 		if(pixIndex == -1) {
 			if(scroll) {
 				//If scroll is enabled start the text again
-				for(uint8_t c = 0; dispIndex < 30; c++) { //Increase char index
+				for(uint8_t c = 0; dispIndex < LINESIZE; c++) { //Increase char index
 					for(uint8_t p = textInPixels[c].charPix.length-1;
-						p >= 0 && dispIndex < 30; p--) { //Get pixel index
+						p >= 0 && dispIndex < LINESIZE; p--) { //Get pixel index
 						leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + 30]] = getPixColor(1, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + 60]] = getPixColor(2, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + 90]] = getPixColor(3, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + 120]] = getPixColor(4, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + LINESIZE*2]] = getPixColor(2, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + LINESIZE*3]] = getPixColor(3, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex + LINESIZE*4]] = getPixColor(4, charIndex, pixIndex);
 
 						dispIndex++;
 					}
 
 					//Add a blank column after each character (space between characters)
-					if(dispIndex < 30) {
+					if(dispIndex < LINESIZE) {
 						leds[ledsIndex[dispIndex]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
 
 						dispIndex++;
 					}
@@ -86,12 +86,12 @@ void updateDisplay() {
 
 			} else {
 				//If not turn off the remaining leds
-				for (dispIndex; dispIndex < 30; dispIndex++) {
+				for (dispIndex; dispIndex < LINESIZE; dispIndex++) {
 					leds[ledsIndex[dispIndex]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
 				}
 			}
 
@@ -99,26 +99,26 @@ void updateDisplay() {
 		}
 
 		//Get the pixels for the current character
-		while(pixIndex >= 0 && dispIndex < 30) {
+		while(pixIndex >= 0 && dispIndex < LINESIZE) {
 
 			//Get the color for each led in this column
 			leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + 30]] = getPixColor(1, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + 60]] = getPixColor(2, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + 90]] = getPixColor(3, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + 120]] = getPixColor(4, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + LINESIZE*2]] = getPixColor(2, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + LINESIZE*3]] = getPixColor(3, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + LINESIZE*4]] = getPixColor(4, charIndex, pixIndex);
 
 			pixIndex--;
 			dispIndex++;
 		}
 
 		//Add a blank column after each character (space between characters)
-		if(dispIndex < 30) {
+		if(dispIndex < LINESIZE) {
 			leds[ledsIndex[dispIndex]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + 30]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + 60]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + 90]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + 120]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
 
 			dispIndex++;
 		}
