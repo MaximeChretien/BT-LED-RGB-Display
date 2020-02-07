@@ -26,7 +26,7 @@ void changeText(String text) {
 
 	//Add blank pixels at the end of the screen for a smooth scrolling effect
 	for(uint8_t j = 1; j <= BLANKCHARS && i < ARRAYSIZE; j++) {
-		if((j * 8) < BLANKPIXELS) {
+		if((j * 8) <= BLANKPIXELS) {
 			textInPixels[i].charPix = {8, {0,0,0,0,0}};
 		} else {
 			textInPixels[i].charPix = {(BLANKPIXELS % 8), {0,0,0,0,0}};
@@ -44,29 +44,33 @@ void changeText(String text) {
 	//Enable scrolling if the text is larger than the screen
 	scroll = (pixSize > LINESIZE) ? true : false;
 
+	//Strange fix for non scrolling text
+	//Without that it show nothing (textIndex[1] == -1)
+	Serial.print("");
+
 	//Reset start index
 	textIndex[0] = 0;
 	textIndex[1] = textInPixels[textIndex[0]].charPix.length-1;
 }
 
 void updateDisplay() {
-	uint8_t dispIndex = 0; //Column index on the display
-	uint8_t charIndex = textIndex[0]; //Character index in textInPixels
-	uint8_t pixIndex = textIndex[1]; //Pixel index in the character
+	int8_t dispIndex = 0; //Column index on the display
+	int8_t charIndex = textIndex[0]; //Character index in textInPixels
+	int8_t pixIndex = textIndex[1]; //Pixel index in the character
 
 	while(dispIndex < LINESIZE) {
 		//If we have reached the end of the text
 		if(pixIndex == -1) {
 			if(scroll) {
 				//If scroll is enabled start the text again
-				for(uint8_t c = 0; dispIndex < LINESIZE; c++) { //Increase char index
-					for(uint8_t p = textInPixels[c].charPix.length-1;
+				for(int8_t c = 0; dispIndex < LINESIZE; c++) { //Increase char index
+					for(int8_t p = textInPixels[c].charPix.length-1;
 						p >= 0 && dispIndex < LINESIZE; p--) { //Get pixel index
-						leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + LINESIZE*2]] = getPixColor(2, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + LINESIZE*3]] = getPixColor(3, charIndex, pixIndex);
-						leds[ledsIndex[dispIndex + LINESIZE*4]] = getPixColor(4, charIndex, pixIndex);
+						leds[ledsIndex[dispIndex]] = getPixColor(0, c, p);
+						leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, c, p);
+						leds[ledsIndex[dispIndex + (LINESIZE*2)]] = getPixColor(2, c, p);
+						leds[ledsIndex[dispIndex + (LINESIZE*3)]] = getPixColor(3, c, p);
+						leds[ledsIndex[dispIndex + (LINESIZE*4)]] = getPixColor(4, c, p);
 
 						dispIndex++;
 					}
@@ -75,9 +79,9 @@ void updateDisplay() {
 					if(dispIndex < LINESIZE) {
 						leds[ledsIndex[dispIndex]] = CRGB::Black;
 						leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
-						leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + (LINESIZE*2)]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + (LINESIZE*3)]] = CRGB::Black;
+						leds[ledsIndex[dispIndex + (LINESIZE*4)]] = CRGB::Black;
 
 						dispIndex++;
 					}
@@ -89,9 +93,9 @@ void updateDisplay() {
 				for (dispIndex; dispIndex < LINESIZE; dispIndex++) {
 					leds[ledsIndex[dispIndex]] = CRGB::Black;
 					leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
-					leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + (LINESIZE*2)]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + (LINESIZE*3)]] = CRGB::Black;
+					leds[ledsIndex[dispIndex + (LINESIZE*4)]] = CRGB::Black;
 				}
 			}
 
@@ -104,9 +108,9 @@ void updateDisplay() {
 			//Get the color for each led in this column
 			leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
 			leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + LINESIZE*2]] = getPixColor(2, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + LINESIZE*3]] = getPixColor(3, charIndex, pixIndex);
-			leds[ledsIndex[dispIndex + LINESIZE*4]] = getPixColor(4, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + (LINESIZE*2)]] = getPixColor(2, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + (LINESIZE*3)]] = getPixColor(3, charIndex, pixIndex);
+			leds[ledsIndex[dispIndex + (LINESIZE*4)]] = getPixColor(4, charIndex, pixIndex);
 
 			pixIndex--;
 			dispIndex++;
@@ -116,9 +120,9 @@ void updateDisplay() {
 		if(dispIndex < LINESIZE) {
 			leds[ledsIndex[dispIndex]] = CRGB::Black;
 			leds[ledsIndex[dispIndex + LINESIZE]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + LINESIZE*2]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + LINESIZE*3]] = CRGB::Black;
-			leds[ledsIndex[dispIndex + LINESIZE*4]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + (LINESIZE*2)]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + (LINESIZE*3)]] = CRGB::Black;
+			leds[ledsIndex[dispIndex + (LINESIZE*4)]] = CRGB::Black;
 
 			dispIndex++;
 		}

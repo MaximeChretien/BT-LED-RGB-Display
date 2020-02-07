@@ -29,7 +29,7 @@ CRGB leds[NUM_LEDS];
 CRGB textColor = CRGB::Red;
 
 //Start index when writing on the display (char index + pixel index)
-uint8_t textIndex[2] = {0, 0};
+int8_t textIndex[2] = {0, 0};
 
 bool scroll = true;
 
