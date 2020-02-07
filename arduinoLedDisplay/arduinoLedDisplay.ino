@@ -14,6 +14,7 @@ void setup() {
 	
 	text = "GEII 2020 !";
 	textChanged = true;
+	Serial.begin(9600);
 }
 
 void loop() {
