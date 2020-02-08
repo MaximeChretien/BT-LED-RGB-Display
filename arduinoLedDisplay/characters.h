@@ -497,10 +497,10 @@ struct character getCharacter(char symbol) {
 
 	symbol = tolower(symbol); //lowercase because we don't support case
 	
-	if (symbol >= 'a' && symbol < 'z') {
+	if (symbol >= 'a' && symbol <= 'z') {
 		result = PROGMEM_getAnything(&chars[symbol - 'a']);
 
-	} else if (symbol >= '0' && symbol < '9') {
+	} else if (symbol >= '0' && symbol <= '9') {
 		result = PROGMEM_getAnything(&chars[26 + (symbol - '0')]);
 	} else {
 		switch (symbol) {
