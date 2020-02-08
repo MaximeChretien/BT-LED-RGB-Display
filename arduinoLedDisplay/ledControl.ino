@@ -25,7 +25,7 @@ void changeText(String text) {
 	}
 
 	//Add blank pixels at the end of the screen for a smooth scrolling effect
-	for(uint8_t j = 1; j <= BLANKCHARS && i < ARRAYSIZE; j++) {
+	for(uint8_t j = 1; j <= BLANKCHARS && i < ARRAYSIZE; j++, i++) {
 		if((j * 8) <= BLANKPIXELS) {
 			textInPixels[i].charPix = {8, {0,0,0,0,0}};
 		} else {
@@ -33,8 +33,6 @@ void changeText(String text) {
 		}
 
 		textInPixels[i].color = textColor;
-
-		i++;
 	}
 
 	//Use a 0 sized character to specify the end of the string
@@ -65,14 +63,13 @@ void updateDisplay() {
 				//If scroll is enabled start the text again
 				for(int8_t c = 0; dispIndex < LINESIZE; c++) { //Increase char index
 					for(int8_t p = textInPixels[c].charPix.length-1;
-						p >= 0 && dispIndex < LINESIZE; p--) { //Get pixel index
+						p >= 0 && dispIndex < LINESIZE; p--, dispIndex++) { //Get pixel index
+
 						leds[ledsIndex[dispIndex]] = getPixColor(0, c, p);
 						leds[ledsIndex[dispIndex + LINESIZE]] = getPixColor(1, c, p);
 						leds[ledsIndex[dispIndex + (LINESIZE*2)]] = getPixColor(2, c, p);
 						leds[ledsIndex[dispIndex + (LINESIZE*3)]] = getPixColor(3, c, p);
 						leds[ledsIndex[dispIndex + (LINESIZE*4)]] = getPixColor(4, c, p);
-
-						dispIndex++;
 					}
 
 					//Add a blank column after each character (space between characters)
@@ -103,7 +100,7 @@ void updateDisplay() {
 		}
 
 		//Get the pixels for the current character
-		while(pixIndex >= 0 && dispIndex < LINESIZE) {
+		for( ; pixIndex >= 0 && dispIndex < LINESIZE; pixIndex--, dispIndex++) {
 
 			//Get the color for each led in this column
 			leds[ledsIndex[dispIndex]] = getPixColor(0, charIndex, pixIndex);
@@ -111,9 +108,6 @@ void updateDisplay() {
 			leds[ledsIndex[dispIndex + (LINESIZE*2)]] = getPixColor(2, charIndex, pixIndex);
 			leds[ledsIndex[dispIndex + (LINESIZE*3)]] = getPixColor(3, charIndex, pixIndex);
 			leds[ledsIndex[dispIndex + (LINESIZE*4)]] = getPixColor(4, charIndex, pixIndex);
-
-			pixIndex--;
-			dispIndex++;
 		}
 
 		//Add a blank column after each character (space between characters)
