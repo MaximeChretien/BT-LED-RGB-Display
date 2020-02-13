@@ -42,9 +42,8 @@ void changeText(String text) {
 	//Enable scrolling if the text is larger than the screen
 	scroll = (pixSize > LINESIZE) ? true : false;
 
-	//Strange fix for non scrolling text
-	//Without that it show nothing (textIndex[1] == -1)
-	Serial.print("");
+	//Needed to avoid problems with reading from PROGMEM (I guess ?)
+	asm("nop \n");
 
 	//Reset start index
 	textIndex[0] = 0;
