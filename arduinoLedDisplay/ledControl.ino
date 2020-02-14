@@ -42,7 +42,7 @@ void changeText(String text) {
 	//Enable scrolling if the text is larger than the screen
 	scroll = (pixSize > LINESIZE) ? true : false;
 
-	//Needed to avoid problems with reading from PROGMEM (I guess ?)
+	//Needed to avoid problems with huge RAM access
 	asm("nop \n");
 
 	//Reset start index
