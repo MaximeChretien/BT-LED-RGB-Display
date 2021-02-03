@@ -1,3 +1,7 @@
+## This is a school project that hasn't been finished due to covid lockdown
+
+---
+
 # Bluetooth RGB LED Display (30x5 pixels)
 
 ### Required Components
